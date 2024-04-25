@@ -7,7 +7,7 @@ type Props = {
   iconName?: string
 }
 
-export function EmptyComponent({description, hasIcon, iconName}: Props) {
+export function EmptyList({description, hasIcon, iconName}: Props) {
   return (
     <Center>
       {hasIcon && (

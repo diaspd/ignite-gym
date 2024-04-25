@@ -6,7 +6,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import { ScreenHeader } from '@components/ScreenHeader'
 import { HistoryCard } from '@components/HistoryCard'
-import { EmptyComponent } from '@components/EmptyComponent'
+import { EmptyList } from '@components/EmptyList'
 
 export function History() {
   const [exercises, setExercises] = useState([
@@ -38,7 +38,7 @@ export function History() {
         px={6}
         contentContainerStyle={exercises.length === 0 && {flex: 1, justifyContent: 'center'}}
         ListEmptyComponent={() => (
-          <EmptyComponent 
+          <EmptyList 
             hasIcon
             iconName="weight-lifter"
             description={`Não há exercícios registrados ainda. ${'\n'} Vamos treinar hoje?`}
