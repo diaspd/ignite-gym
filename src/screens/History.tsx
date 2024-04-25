@@ -44,6 +44,7 @@ export function History() {
             description={`Não há exercícios registrados ainda. ${'\n'} Vamos treinar hoje?`}
           />
         )}
+        showsVerticalScrollIndicator={false}
       />
     </VStack>
   )
