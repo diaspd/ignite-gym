@@ -26,7 +26,7 @@ export function HomeHeader() {
       <TouchableOpacity>
         <Icon 
           as={MaterialIcons}
-          name="logout"
+          name="forklift"
           color="gray.200"
           size={7}
         />

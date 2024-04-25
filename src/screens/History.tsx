@@ -1,8 +1,12 @@
 import { useState } from 'react'
-import { Heading, VStack, SectionList } from 'native-base'
+
+import { Heading, VStack, SectionList, Text, Center, Icon } from 'native-base'
+
+import { MaterialCommunityIcons } from '@expo/vector-icons'
 
 import { ScreenHeader } from '@components/ScreenHeader'
 import { HistoryCard } from '@components/HistoryCard'
+import { EmptyComponent } from '@components/EmptyComponent'
 
 export function History() {
   const [exercises, setExercises] = useState([
@@ -32,6 +36,14 @@ export function History() {
           </Heading>
         )}
         px={6}
+        contentContainerStyle={exercises.length === 0 && {flex: 1, justifyContent: 'center'}}
+        ListEmptyComponent={() => (
+          <EmptyComponent 
+            hasIcon
+            iconName="weight-lifter"
+            description={`Não há exercícios registrados ainda. ${'\n'} Vamos treinar hoje?`}
+          />
+        )}
       />
     </VStack>
   )
