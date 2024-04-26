@@ -85,7 +85,6 @@ export function ProfileSkeleton() {
         startColor="gray.500"
         endColor="gray.400"
         rounded="sm"
-        mb={8}
       />
     </>
   )
