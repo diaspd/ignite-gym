@@ -19,13 +19,11 @@ export function Profile() {
       <ScreenHeader title='Perfil'/>
 
       <ScrollView>
-        {isLoading ? (
-          <Center mt={6} px={8}>
+        <Center mt={6} px={8}>
+          {isLoading ? (
             <ProfileSkeleton />
-          </Center>
-        ): (
-        <>
-          <Center mt={6} px={8}>
+          ): (
+          <>
             <UserPhoto 
               source={{ uri: 'https://github.com/diaspd.png'}}
               alt="Foto do usuário"
@@ -45,10 +43,8 @@ export function Profile() {
               placeholder="E-mail"
               isDisabled
             />
-          </Center>
 
-          <VStack px={8} mt={12} mb={9}>
-            <Heading color="gray.200" fontSize="md" mb={2}>
+            <Heading color="gray.200" fontSize="md" mb={2} alignSelf="flex-start" mt={12}>
               Alterar senha
             </Heading>
 
@@ -71,9 +67,9 @@ export function Profile() {
             />  
 
             <Button title='Atualizar' mt={4}/>
-          </VStack>
-        </>
-      )}
+          </>
+          )}
+        </Center>
       </ScrollView>
     </VStack>
   )

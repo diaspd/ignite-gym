@@ -44,7 +44,6 @@ export function ProfileSkeleton() {
         w={24}
         h={6}
         mt={16} 
-        mb={1}
         startColor="gray.500"
         endColor="gray.400"
         rounded="md"
