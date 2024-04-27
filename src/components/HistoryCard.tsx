@@ -16,7 +16,6 @@ export function HistoryCard() {
       <Text color="gray.300" fontSize="md">
         08:56
       </Text>
-
     </HStack>
   );
 }

@@ -1,8 +1,6 @@
 import { useState } from 'react'
 
-import { Heading, VStack, SectionList, Text, Center, Icon } from 'native-base'
-
-import { MaterialCommunityIcons } from '@expo/vector-icons'
+import { Heading, VStack, SectionList } from 'native-base'
 
 import { ScreenHeader } from '@components/ScreenHeader'
 import { HistoryCard } from '@components/HistoryCard'
