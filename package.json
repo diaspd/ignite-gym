@@ -16,17 +16,18 @@
     "@react-navigation/native-stack": "^6.9.26",
     "@types/react": "~18.2.45",
     "expo": "~50.0.4",
+    "expo-file-system": "~16.0.9",
     "expo-font": "~11.10.2",
+    "expo-image-picker": "~14.7.1",
     "expo-status-bar": "~1.11.1",
     "native-base": "^3.4.28",
     "react": "18.2.0",
+    "react-hook-form": "^7.51.3",
     "react-native": "0.73.6",
     "react-native-safe-area-context": "4.8.2",
     "react-native-screens": "~3.29.0",
     "react-native-svg": "14.1.0",
-    "typescript": "^5.3.0",
-    "expo-image-picker": "~14.7.1",
-    "expo-file-system": "~16.0.9"
+    "typescript": "^5.3.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
