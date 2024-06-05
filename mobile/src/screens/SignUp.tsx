@@ -35,8 +35,15 @@ export function SignUp() {
     navigation.goBack()
   }
 
-  function handleSignUp({ name, email, password, password_confirm }: FormDataProps) {
-    console.log({ name, email, password, password_confirm })
+  function handleSignUp({ name, email, password }: FormDataProps) {
+    fetch('http://172.22.32.1:3333/users', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ name, email, password })
+    })
   }
 
   return (
