@@ -9,7 +9,7 @@ export function Routes() {
   const { colors } = useTheme();
   const { user } = useAuth()
   
-  console.log('', user)
+  console.log('===>', user)
 
   const theme = DefaultTheme;
   theme.colors.background = colors.gray[700]

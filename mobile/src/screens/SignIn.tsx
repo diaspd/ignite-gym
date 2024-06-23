@@ -8,6 +8,8 @@ import BackgroundImg from '@assets/background.png'
 
 import { AuthNavigatorRoutesProps } from '@routes/auth.routes'
 
+import { useAuth } from '@hooks/useAuth'
+
 import { Input } from '@components/Input'
 import { Button } from '@components/Button'
 import { Controller, useForm } from 'react-hook-form'
@@ -17,14 +19,16 @@ type FormDataProps = {
   password: string;
 }
 
-const signUpSchema = y.object({
+const signInSchema = y.object({
   email: y.string().required('Informe o e-mail.').email('E-mail inválido.'),
   password: y.string().required('Informe a senha.').min(6, 'A senha deve ter pelo menos 6 dígitos.'),
 })
 
 export function SignIn() {
+  const { signIn } = useAuth()
+
   const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({
-    resolver: yupResolver(signUpSchema)
+    resolver: yupResolver(signInSchema)
   });
   
   const navigation = useNavigation<AuthNavigatorRoutesProps>();
@@ -33,8 +37,8 @@ export function SignIn() {
     navigation.navigate('signUp')
   }
 
-  function handleSignIn({ email, password }: FormDataProps) {
-    console.log({ email, password })
+  async function handleSignIn({ email, password }: FormDataProps){
+    await signIn(email, password);
   }
 
   return (
@@ -92,7 +96,7 @@ export function SignIn() {
 
         <Button 
           title='Acessar'
-          onPress={handleSubmit(handleSignIn)}  
+          onPress={handleSubmit(handleSignIn)} 
         />
       </Center>
 
