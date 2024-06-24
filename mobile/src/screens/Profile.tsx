@@ -1,13 +1,12 @@
 import { useState } from 'react'
 import { TouchableOpacity } from 'react-native'
 
-import { Center, ScrollView, VStack, Text, Heading, useToast } from 'native-base'
+import { Center, ScrollView, VStack, Text, Heading, useToast, Skeleton } from 'native-base'
 import * as ImagePicker from 'expo-image-picker';
 import * as FileSystem from 'expo-file-system';
 
 import { ScreenHeader } from '@components/ScreenHeader'
 import { UserPhoto } from '@components/UserPhoto'
-import { ProfileSkeleton } from '@components/ProfileSkeleton'
 import { Input } from '@components/Input'
 import { Button } from '@components/Button'
 
@@ -68,7 +67,64 @@ export function Profile() {
       <ScrollView contentContainerStyle={{ paddingBottom: 56}}>
         <Center mt={6} px={8}>
           {isLoading ? (
-            <ProfileSkeleton />
+            <>
+              <Skeleton 
+                w={PHOTO_SIZE} 
+                h={PHOTO_SIZE} 
+                rounded="full" 
+                startColor="gray.500"
+                endColor="gray.400"
+              />
+        
+              <Skeleton 
+                w={20}
+                h={4}
+                mt={4} 
+                mb={8}
+                startColor="gray.500"
+                endColor="gray.400"
+                rounded="md"
+              />
+       
+              {Array.from({ length: 2 }).map((_, i) => {
+                return (
+                  <Skeleton 
+                    key={i}
+                    w={342}
+                    my={2}
+                    h={14}
+                    startColor="gray.500"
+                    endColor="gray.400"
+                    rounded="sm"
+                  />
+                )
+              })}
+       
+              <Skeleton 
+                w={24}
+                h={6}
+                mt={16} 
+                startColor="gray.500"
+                endColor="gray.400"
+                rounded="md"
+                ml={-56}
+                mr={6} 
+              />
+             
+              {Array.from({ length: 4 }).map((_, i) => {
+                return (
+                  <Skeleton 
+                    key={i}
+                    w={342}
+                    h={14}
+                    startColor="gray.500"
+                    endColor="gray.400"
+                    rounded="sm"
+                    marginTop={i.valueOf() === 3 ? 10 : 3}
+                  />
+                )
+              })}
+           </>
           ) : (
           <>
             <UserPhoto 
@@ -91,7 +147,7 @@ export function Profile() {
               isDisabled
             />
 
-            <Heading color="gray.200" fontSize="md" mb={2} alignSelf="flex-start" mt={12} fontFamily="heading">
+            <Heading color="gray.200" fontSize="md" mb={2} alignSelf="flex-start" mt={10} fontFamily="heading">
               Alterar senha
             </Heading>
 
