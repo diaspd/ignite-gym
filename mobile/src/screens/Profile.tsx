@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Alert, TouchableOpacity } from 'react-native'
+import { TouchableOpacity } from 'react-native'
 
 import { Center, ScrollView, VStack, Text, Heading, useToast } from 'native-base'
 import * as ImagePicker from 'expo-image-picker';
@@ -69,7 +69,7 @@ export function Profile() {
         <Center mt={6} px={8}>
           {isLoading ? (
             <ProfileSkeleton />
-          ): (
+          ) : (
           <>
             <UserPhoto 
               source={{ uri: userPhoto}}
