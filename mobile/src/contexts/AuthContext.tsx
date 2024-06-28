@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState, type ReactNode } from "react";
 
-import { storageAuthTokenSave } from "@storage/storageAuthToken";
+import { storageAuthTokenSave, storageAuthTokenGet } from "@storage/storageAuthToken";
 import { storageUserSave, storageUserGet, storageUserRemove } from "@storage/storageUser";
 
 import { api } from "@services/api";
@@ -23,20 +23,22 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
   const [user, setUser] = useState<UserDTO>({} as UserDTO)
   const [isLoadingUserStorageData, setIsLoadingUserStorageData] = useState(true);
 
-  async function storageUserAndToken({userData, token}: {userData: UserDTO, token: string}) {
-    try {
-      setIsLoadingUserStorageData(true);
+  async function userAndTokenUpdate(userData: UserDTO, token: string) {
+    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    setUser(userData); 
+  }
 
-      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    
-      await storageUserSave(user);
+  async function storageUserAndTokenSave(userData: UserDTO, token: string) {
+    try {
+      setIsLoadingUserStorageData(true)
+     
+      await storageUserSave(userData);
       await storageAuthTokenSave(token);
-      setUser(userData);
 
     } catch (error) {
       throw error;
     } finally {
-      setIsLoadingUserStorageData(false);
+      setIsLoadingUserStorageData(false)
     }
   }
 
@@ -45,11 +47,13 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
       const { data } = await api.post('/sessions', { email, password });
       
       if (data.user && data.token) {
-       
-        storageUserAndToken(data);
+        await storageUserAndTokenSave(data.user, data.token)
+        userAndTokenUpdate(data.user, data.token);
       }
     } catch (error) {
       throw error
+    } finally {
+      setIsLoadingUserStorageData(false);
     }
   }
 
@@ -67,10 +71,13 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
 
   async function loadUserData() {
     try {
+      setIsLoadingUserStorageData(true);
+
       const userLogged = await storageUserGet();
+      const token = await storageAuthTokenGet();
       
-      if(userLogged) {
-        setUser(userLogged)
+      if(token && userLogged) {
+        userAndTokenUpdate(userLogged, token)
       }
     } catch (error) {
       throw error;
