@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState, type ReactNode } from "react";
 
-import { storageAuthTokenSave, storageAuthTokenGet } from "@storage/storageAuthToken";
+import { storageAuthTokenSave, storageAuthTokenGet, storageAuthTokenRemove } from "@storage/storageAuthToken";
 import { storageUserSave, storageUserGet, storageUserRemove } from "@storage/storageUser";
 
 import { api } from "@services/api";
@@ -61,7 +61,8 @@ export function AuthContextProvider({ children }: AuthContextProviderProps) {
     try {
       setIsLoadingUserStorageData(true)
       setUser({} as UserDTO)
-      await storageUserRemove();
+      await storageUserRemove(); 
+      await storageAuthTokenRemove();
     } catch (error) {
       throw error;
     } finally {
