@@ -107,6 +107,7 @@ export function Home() {
           keyExtractor={item => item.id}
           renderItem={({ item }) => (
             <ExerciseCard 
+              data={item}
               onPress={handleOpenExerciseDetails}
             />
           )}
