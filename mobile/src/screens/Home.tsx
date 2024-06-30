@@ -1,21 +1,24 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { VStack, FlatList, HStack, Heading, Text, useToast } from 'native-base'
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 
 import { api } from '@services/api';
 
+import { AppError } from '@utils/AppError';
+
 import { AppNavigatorRoutesProps } from '@routes/app.routes';
+
+import type { ExerciseDTO } from '@dtos/ExerciseDTO';
 
 import { Group } from '@components/Group';
 import { HomeHeader } from '@components/HomeHeader';
 import { ExerciseCard } from '@components/ExerciseCard';
-import { AppError } from '@utils/AppError';
 
 
 export function Home() {
   const [groups, setGroups] = useState<string[]>([]);
-  const [exercises, setExercises] = useState(["Puxada frontal", "Remada curvada", "Remada unilateral", "Supino"])
-  const [isGroupSelected, setIsGroupSelected] = useState("costas")
+  const [exercises, setExercises] = useState<ExerciseDTO[]>([])
+  const [groupSelected, setGroupSelected] = useState("costas")
 
   const toast = useToast()
   const navigation = useNavigation<AppNavigatorRoutesProps>()
@@ -40,9 +43,31 @@ export function Home() {
     }
   }
 
+  async function fetchExercisesByGroup(){
+    try {
+      const response = await api.get(`/exercises/bygroup/${groupSelected}`);
+      setExercises(response.data)
+    } catch (error) {
+      const isAppError = error instanceof AppError;
+      const title = isAppError ? error.message : 'Não foi possível carregar os exercícios.'
+
+      toast.show({
+        title,
+        placement: 'top',
+        bgColor: 'red.500'
+      })
+    }
+  }
+
   useEffect(() => {
     fetchGroups();
   }, [])
+
+  useFocusEffect(
+    useCallback(() => {
+      fetchExercisesByGroup()
+    },[groupSelected])
+  )
 
   return (
     <VStack flex={1}>
@@ -54,8 +79,8 @@ export function Home() {
         renderItem={({ item }) => (
           <Group 
           name={item} 
-          isActive={isGroupSelected.toUpperCase() === item.toUpperCase()} 
-          onPress={() => setIsGroupSelected(item)}
+          isActive={groupSelected.toUpperCase() === item.toUpperCase()} 
+          onPress={() => setGroupSelected(item)}
         />
         )}
         horizontal
@@ -79,7 +104,7 @@ export function Home() {
 
         <FlatList 
           data={exercises}
-          keyExtractor={item => item}
+          keyExtractor={item => item.id}
           renderItem={({ item }) => (
             <ExerciseCard 
               onPress={handleOpenExerciseDetails}
