@@ -30,9 +30,9 @@ export function Exercise() {
   const navigation = useNavigation<AppNavigatorRoutesProps>();
   const route = useRoute();
 
-  const toast = useToast()
+  const toast = useToast();
 
-  const { exerciseId } = route.params as RouteParamsProps
+  const { exerciseId } = route.params as RouteParamsProps;
 
   function handleGoBack() {
     navigation.goBack()
