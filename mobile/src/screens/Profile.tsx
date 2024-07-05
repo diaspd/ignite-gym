@@ -22,13 +22,30 @@ export const PHOTO_SIZE = 33
 type FormDataProps = {
   name: string;
   email?: string;
-  password?: string;
-  old_password?: string;
-  confirm_password?: string;
+  password?: string | null | undefined;
+  old_password?: string | undefined;
+  confirm_password?: string | null;
 }
 
 const profileSchema = yup.object({
-  name: yup.string().required('Informe o nome')
+  name: yup
+  .string()
+  .required('Informe o nome'),
+  password: yup
+  .string()
+  .min(6, 'A senha deve ter pelo menos 6 dígitos.')
+  .nullable()
+  .transform((value) => !!value ? value : null),
+  confirm_password: yup
+  .string()
+  .nullable()
+  .transform((value) => !!value ? value : null)
+  .oneOf([yup.ref('password'), null], 'A confirmação de senha não confere.')
+	.when('password', {
+		is: (Field: any) => Field,
+		then: (schema) =>
+			schema.nullable().required('Informe a confirmação da senha.'),
+	}),
 })
 
 export function Profile() {
@@ -36,12 +53,12 @@ export function Profile() {
   const [userPhoto, setUserPhoto] = useState('https://github.com/diaspd.png')
 
   const toast = useToast();
-
   const { user } = useAuth();
+
   const { control, handleSubmit, formState: { errors } } = useForm<FormDataProps>({ 
     defaultValues: { 
       name: user.name,
-      email: user.email
+      email: user.email,
     },
     resolver: yupResolver(profileSchema) 
   });
@@ -62,7 +79,7 @@ export function Profile() {
   
       if (photoSelected.assets[0].uri) {
         const photoInfo = await FileSystem.getInfoAsync(photoSelected.assets[0].uri)
-
+        
         if(photoInfo.exists && (photoInfo.size  / 1024 / 1024 ) > 5){
           return toast.show({
             title: 'Essa imagem é muito grande. Escolha uma de até 5MB.',
@@ -211,7 +228,7 @@ export function Profile() {
                   bg="gray.600"
                   placeholder='Senha antiga'
                   secureTextEntry
-                  onChange={onChange}
+                  onChangeText={onChange}
                 />
               )}
             />
@@ -224,7 +241,7 @@ export function Profile() {
                   bg="gray.600"
                   placeholder='Nova senha'
                   secureTextEntry
-                  onChange={onChange}
+                  onChangeText={onChange}
                   errorMessage={errors.password?.message}
                 />
               )}
@@ -238,8 +255,8 @@ export function Profile() {
                   bg="gray.600"
                   placeholder='Confirme a nova senha'
                   secureTextEntry
-                  onChange={onChange}
-                  errorMessage={errors.password?.message}
+                  onChangeText={onChange}
+                  errorMessage={errors.confirm_password?.message}
                 />  
               )}
             />
