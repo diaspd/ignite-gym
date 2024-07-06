@@ -12,6 +12,8 @@ import * as yup from 'yup';
 
 import { useAuth } from '@hooks/useAuth';
 
+import defaultUserAvatarImg from '@assets/userPhotoDefault.png'; 
+
 import { api } from '@services/api';
 import { AppError } from '@utils/AppError';
 
@@ -54,7 +56,6 @@ const profileSchema = yup.object({
 export function Profile() {
   const [isUpdating, setIsUpdating] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [userPhoto, setUserPhoto] = useState('https://github.com/diaspd.png')
 
   const toast = useToast();
   const { user, updateUserProfile } = useAuth();
@@ -106,11 +107,17 @@ export function Profile() {
 
         userPhotoUploadForm.append('avatar', photoFile);
 
-        await api.patch('/users/avatar', userPhotoUploadForm, {
+        const avatarUpdtedResponse = await api.patch('/users/avatar', userPhotoUploadForm, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
         });
+
+        const userUpdated = user;
+
+        userUpdated.avatar = avatarUpdtedResponse.data.avatar;
+
+        await updateUserProfile(userUpdated);
       
         return toast.show({
           title: 'Imagem atualizada com sucesso.',
@@ -224,7 +231,11 @@ export function Profile() {
           ) : (
           <>
             <UserPhoto 
-              source={{ uri: userPhoto}}
+              source={
+                user.avatar  
+                ? { uri: `${api.defaults.baseURL}/avatar/${user.avatar}` } 
+                : defaultUserAvatarImg
+              }
               alt="Foto do usuário"
               size={PHOTO_SIZE}
             />
