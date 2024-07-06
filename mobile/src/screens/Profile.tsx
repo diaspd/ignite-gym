@@ -100,9 +100,17 @@ export function Profile() {
           name: `${user.name}.${fileExtension}`.toLowerCase(),
           uri: photoSelected.assets[0].uri,
           type: `${photoSelected.assets[0].type}/${fileExtension}`
-        }
+        } as any;
 
-        console.log(photoFile);
+        const userPhotoUploadForm = new FormData();
+
+        userPhotoUploadForm.append('avatar', photoFile);
+
+        await api.patch('/users/avatar', userPhotoUploadForm, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
       
         return toast.show({
           title: 'Imagem atualizada com sucesso.',
