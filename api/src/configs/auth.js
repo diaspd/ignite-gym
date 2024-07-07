@@ -1,6 +1,6 @@
 module.exports = {
   jwt: {
     secret: "pedro",
-    expiresIn: "5s"
+    expiresIn: "3d"
   },
 };

@@ -10,9 +10,10 @@ import { HistoryByDayDTO } from '@dtos/HistoryByDayDTO';
 import { ScreenHeader } from '@components/ScreenHeader'
 import { HistoryCard } from '@components/HistoryCard'
 import { EmptyList } from '@components/EmptyList'
+import { Loading } from '@components/Loading'
 
 export function History() {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [exercises, setExercises] = useState<HistoryByDayDTO[]>([]);
 
   const toast = useToast();
@@ -40,34 +41,37 @@ export function History() {
   useFocusEffect(
     useCallback(() => {
       fetchHistory()
-    },[exercises])
+    },[])
   )
 
-  
   return (
     <VStack flex={1}>
       <ScreenHeader title="Histórico de Exercícios" />
       
-      <SectionList 
-        sections={exercises}
-        keyExtractor={item => item.id}
-        renderItem={({ item }) => <HistoryCard data={item} /> }
-        renderSectionHeader={({ section }) => (
-          <Heading color="gray.200" fontSize="md" mt={10} mb={3} fontFamily="heading">
-            {section.title}
-          </Heading>
-        )}
-        px={6}
-        contentContainerStyle={exercises.length === 0 && {flex: 1, justifyContent: 'center'}}
-        ListEmptyComponent={() => (
-          <EmptyList 
-            hasIcon
-            iconName="weight-lifter"
-            description={`Não há exercícios registrados ainda. ${'\n'} Vamos treinar hoje?`}
+      {
+        isLoading ? <Loading /> : (
+          <SectionList 
+            sections={exercises}
+            keyExtractor={item => item.id}
+            renderItem={({ item }) => <HistoryCard data={item} /> }
+            renderSectionHeader={({ section }) => (
+              <Heading color="gray.200" fontSize="md" mt={10} mb={3} fontFamily="heading">
+                {section.title}
+              </Heading>
+            )}
+            px={6}
+            contentContainerStyle={exercises.length === 0 && {flex: 1, justifyContent: 'center'}}
+            ListEmptyComponent={() => (
+              <EmptyList 
+                hasIcon
+                iconName="weight-lifter"
+                description={`Não há exercícios registrados ainda. ${'\n'} Vamos treinar hoje?`}
+              />
+            )}
+            showsVerticalScrollIndicator={false}
           />
-        )}
-        showsVerticalScrollIndicator={false}
-      />
+        )
+      }
     </VStack>
   )
 }
