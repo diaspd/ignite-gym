@@ -25,7 +25,7 @@ Clone the project and access the folder.
 
 ```bash
 # Clone the project
-$ git clone 
+$ git clone https://github.com/diaspd/ignite-gym.git
 
 # Install the dependencies
 $ npm install
@@ -43,6 +43,7 @@ This project was developed with the following technologies:
 - React Native
 - Type Script
 - Expo
+- Native Base
 </b>
 
 </br>
