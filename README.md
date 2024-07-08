@@ -1,5 +1,5 @@
 <h1 align="center">
-   
+   Ignite Gym
 </h1> 
 
 <div align="center">
