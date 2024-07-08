@@ -26,14 +26,39 @@ Clone the project and access the folder.
 ```bash
 # Clone the project
 $ git clone https://github.com/diaspd/ignite-gym.git
-
-# Install the dependencies
-$ npm install
-
-# Start the application
-$ npm run start
-
 ```
+
+### Api
+
+## Setting the app
+
+```bash
+$ cd ./api
+```
+
+## Installation & Running the app
+
+```bash
+$ npm install
+$ npm run start
+```
+
+### mobile
+
+## Setting the app
+
+```bash
+$ cd ./mobile
+```
+
+## Installation & Running the app
+
+```bash
+$ npm install
+$ npm run start
+```
+`Don't forget to change the api baseURL on 'mobile/src/services/api.ts' and between the second '/' and ':' add your IP`
+
 </br>
 
 ## 💻 Technologies
