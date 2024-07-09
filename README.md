@@ -74,7 +74,7 @@ This project was developed with the following technologies:
 </br>
 
 ## 📄 Project
-💰 A project made for people mark witch exercise wore done, using react hook form, axios, context, expo image picker, api connection and more.
+💰 A project made for people mark witch exercises wore done, save it on history, change profile information etc. Using react hook form, yup, axios, context, expo image picker, api connection and more.
 
 <br></br>
 
