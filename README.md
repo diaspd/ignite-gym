@@ -74,7 +74,7 @@ This project was developed with the following technologies:
 </br>
 
 ## 📄 Project
-💰 .
+💰 A project made for people mark witch exercise wore done, using react hook form, axios, context, api connection and more.
 
 <br></br>
 
