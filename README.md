@@ -45,7 +45,7 @@ $ npm run start
 
 </br>
 
-### mobile
+### Mobile
 
 ## Setting the app
 
