@@ -43,6 +43,8 @@ $ npm install
 $ npm run start
 ```
 
+</br>
+
 ### mobile
 
 ## Setting the app
